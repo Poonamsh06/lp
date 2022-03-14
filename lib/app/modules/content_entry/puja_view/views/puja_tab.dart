@@ -28,33 +28,9 @@ class AddUpdatePuja extends StatelessWidget {
                     padding: EdgeInsets.only(top: Get.height * 0.2),
                     child: Column(
                       children: [
-                        MenuBarTile(
-                          selectedTab: 'up',
-                          iconData: LineIcons.fileUpload,
-                          titleText: 'Update Puja',
-                          tab: tab,
-                          onTap: () {
-                            Get.toNamed('/home/${AppStrings.CONTENT_ENTRY}/update_puja/up');
-                          },
-                        ),
-                        MenuBarTile(
-                          selectedTab: 'an',
-                          iconData: LineIcons.newspaper,
-                          titleText: 'Add Puja',
-                          tab: tab,
-                          onTap: () {
-                            Get.toNamed('/home/${AppStrings.CONTENT_ENTRY}/update_puja/an');
-                          },
-                        ),
-                        MenuBarTile(
-                          selectedTab: 'rp',
-                          iconData: LineIcons.recycle,
-                          titleText: 'Remove Puja',
-                          tab: tab,
-                          onTap: () {
-                            Get.toNamed('/home/${AppStrings.CONTENT_ENTRY}/update_puja/rp');
-                          },
-                        ),
+//TODO: role display options
+
+
                       ],
                     ),
                   )),
@@ -149,4 +125,36 @@ class AddUpdatePuja extends StatelessWidget {
       ),
     );
   }
+}
+
+pujaTabs(tab) {
+  return {
+    'up': MenuBarTile(
+      selectedTab: 'up',
+      iconData: LineIcons.fileUpload,
+      titleText: 'Update Puja',
+      tab: tab,
+      onTap: () {
+        Get.toNamed('/home/${AppStrings.CONTENT_ENTRY}/update_puja/up');
+      },
+    ),
+    'an': MenuBarTile(
+      selectedTab: 'an',
+      iconData: LineIcons.newspaper,
+      titleText: 'Add Puja',
+      tab: tab,
+      onTap: () {
+        Get.toNamed('/home/${AppStrings.CONTENT_ENTRY}/update_puja/an');
+      },
+    ),
+    'rp': MenuBarTile(
+      selectedTab: 'rp',
+      iconData: LineIcons.recycle,
+      titleText: 'Remove Puja',
+      tab: tab,
+      onTap: () {
+        Get.toNamed('/home/${AppStrings.CONTENT_ENTRY}/update_puja/rp');
+      },
+    ),
+  };
 }

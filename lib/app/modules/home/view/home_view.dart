@@ -5,6 +5,8 @@ import 'package:management/resources/app_exports.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:management/resources/app_strings.dart';
 import 'package:management/resources/responshive.dart';
+import 'package:management/roles/role_a.dart';
+import 'package:management/roles/role_b.dart';
 
 import '../../../purohit_profile_mgmt/all_prohit_profiles.dart';
 import '../../management/view/user_management_view.dart';
@@ -16,6 +18,7 @@ class HomeView extends StatelessWidget {
   String tab = Get.parameters['tab']!;
   @override
   Widget build(BuildContext context) {
+    Get.put(AuthController(RoleB()));
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

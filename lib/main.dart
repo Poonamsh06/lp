@@ -10,6 +10,10 @@ import 'package:management/resources/app_config.dart';
 import 'package:management/resources/app_exports.dart';
 import 'package:management/resources/app_strings.dart';
 import 'package:system_theme/system_theme.dart';
+import 'package:management/resources/app_exports.dart';
+import 'package:management/resources/app_strings.dart';
+import 'package:management/roles/role.dart';
+import 'package:management/roles/role_a.dart';
 import 'app/modules/home/view/home_view.dart';
 import 'app/modules/management/view/client_users_list.dart';
 import 'app/modules/management/view/pandit_users_list.dart';
@@ -67,5 +71,12 @@ class MyApp extends StatelessWidget {
         ])
       ],
     );
+  }
+}
+class AuthController extends GetxController {
+  late Rx<Role> role;
+
+  AuthController(Role p_role) : role = Rx(RoleA()) {
+    role.value = p_role;
   }
 }

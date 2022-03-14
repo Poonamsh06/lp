@@ -17,31 +17,33 @@ class ContentEntryView extends StatelessWidget {
             padding: const EdgeInsets.all(30.0),
             child: Wrap(
               children: [
-                FunctionCards(
-                  iconData: CupertinoIcons.bolt_horizontal_circle,
-                  text: 'Puja',
-                  ontap: () async {
-                    Get.toNamed('/home/${AppStrings.CONTENT_ENTRY}/update_puja/up');
-                  },
-                ),
-                FunctionCards(
-                  iconData: CupertinoIcons.archivebox,
-                  text: 'Samagri',
-                  ontap: () {
-                    Get.toNamed('/home/${AppStrings.CONTENT_ENTRY}/samagri');
-                  },
-                ),
-                const FunctionCards(
-                  iconData: CupertinoIcons.calendar,
-                  text: 'Calender',
-                ),
-                const FunctionCards(
-                  iconData: CupertinoIcons.calendar_today,
-                  text: 'Muhurat',
-                ),
+//TODO: role display options
               ],
             )));
   }
 }
 
-Map contentEntryFunctionCards = {};
+Map contentEntryFunctionCards = {
+  'Puja': FunctionCards(
+    iconData: CupertinoIcons.bolt_horizontal_circle,
+    text: 'Puja',
+    ontap: () async {
+      Get.toNamed('/home/${AppStrings.CONTENT_ENTRY}/update_puja/up');
+    },
+  ),
+  'Samagri': FunctionCards(
+    iconData: CupertinoIcons.archivebox,
+    text: 'Samagri',
+    ontap: () {
+      Get.toNamed('/home/${AppStrings.CONTENT_ENTRY}/samagri');
+    },
+  ),
+  'Calender': const FunctionCards(
+    iconData: CupertinoIcons.calendar,
+    text: 'Calender',
+  ),
+  'Muhurat': const FunctionCards(
+    iconData: CupertinoIcons.calendar_today,
+    text: 'Muhurat',
+  ),
+};
