@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:management/app/modules/management/controller/pandit_controller.dart';
 import 'package:management/resources/app_exports.dart';
-import 'dart:html' as html;
 
 class PujaOffering extends StatefulWidget{
   final AsyncSnapshot<DocumentSnapshot> asyncSnapshot;
@@ -217,7 +216,7 @@ class _PujaOfferingState extends State<PujaOffering> {
               setState(() {
                 enableId = '';
               });
-               html.window.location.reload();
+              //  html.window.location.reload();
               });
              
             }       

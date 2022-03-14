@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:management/resources/app_exports.dart';
 
 import '../controller/pandit_controller.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:management/main.dart';
+import 'package:management/resources/app_exports.dart';
+import 'package:switcher/switcher.dart';
 
-class PanditSetting extends StatelessWidget{
+class PanditSetting extends StatelessWidget {
   final AsyncSnapshot<DocumentSnapshot> query;
-   PanditSetting({required this.query});
+  PanditSetting({required this.query});
   @override
   Widget build(BuildContext context) {
    

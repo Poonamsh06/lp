@@ -189,7 +189,7 @@ class _AddNewPujaState extends State<AddNewPuja> {
                           contentPadding: EdgeInsets.all(20),
                           title: "Warning",
                           content: Text("Are you sure you want to add ?"),
-                          onConfirm: () {
+                          onConfirm: () async {
                             List<String> names = [];
                             List<String> description = [];
                             List<String> benefits = [];
@@ -214,6 +214,16 @@ class _AddNewPujaState extends State<AddNewPuja> {
                             _benifits.forEach((element) {
                               benefits.add(element.text);
                             });
+
+
+                              final id = await FirebaseFirestore.instance
+                                  .collection('/analytics_folder/folder/management_analytics/puja/add/')
+                                  .add({
+                                "puja_name": names,
+                                "puja_id": pujaId,
+                                'time_stamp': FieldValue.serverTimestamp(),
+                              });
+
                             Future.delayed(Duration(seconds: 4), () async {
                               await FirebaseFirestore.instance
                                   .doc(

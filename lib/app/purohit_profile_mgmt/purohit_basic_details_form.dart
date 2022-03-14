@@ -7,8 +7,7 @@ import 'purohit_class.dart';
 class PurohitBasicDetailsForm extends StatefulWidget {
   final DocumentSnapshot documentSnapshot;
 
-  const PurohitBasicDetailsForm({Key? key, required this.documentSnapshot})
-      : super(key: key);
+  const PurohitBasicDetailsForm({Key? key, required this.documentSnapshot}) : super(key: key);
 
   @override
   State<PurohitBasicDetailsForm> createState() => _PurohitBasicDetailsFormState();
@@ -17,7 +16,7 @@ class PurohitBasicDetailsForm extends StatefulWidget {
 class _PurohitBasicDetailsFormState extends State<PurohitBasicDetailsForm> {
   bool updating = false;
   List<DropdownMenuItem> languageItems = const [
-     DropdownMenuItem(
+    DropdownMenuItem(
       value: 'Hindi',
       child: Text('Hindi'),
     ),
@@ -84,6 +83,8 @@ class _PurohitBasicDetailsFormState extends State<PurohitBasicDetailsForm> {
   String? profile;
   String? cover;
 
+  late PunditData before;
+
   @override
   void initState() {
     _verified = Purohit(widget.documentSnapshot).verification;
@@ -102,6 +103,9 @@ class _PurohitBasicDetailsFormState extends State<PurohitBasicDetailsForm> {
     language = Purohit(widget.documentSnapshot).language;
     cover = Purohit(widget.documentSnapshot).coverUrl;
     profile = Purohit(widget.documentSnapshot).profileUrl;
+
+    before = PunditData(
+        _verified, name, bio, mobile, age, state, city, experience, expertise, qualification, type, swastik, pictures, language, profile, cover);
 
     //for(int i=0;i<)
     super.initState();
@@ -148,13 +152,12 @@ class _PurohitBasicDetailsFormState extends State<PurohitBasicDetailsForm> {
       "Lakshadweep",
       "Puducherry",
     ];
-    List<DropdownMenuItem<String>> experienceItems =
-        List<DropdownMenuItem<String>>.generate(
-            100,
-            (index) => DropdownMenuItem(
-                  child: Text("$index Years"),
-                  value: "$index",
-                ));
+    List<DropdownMenuItem<String>> experienceItems = List<DropdownMenuItem<String>>.generate(
+        100,
+        (index) => DropdownMenuItem(
+              child: Text("$index Years"),
+              value: "$index",
+            ));
     List<DropdownMenuItem<String>> items = [];
     for (int i = 0; i < states.length; i++) {
       items.add(DropdownMenuItem<String>(
@@ -181,10 +184,20 @@ class _PurohitBasicDetailsFormState extends State<PurohitBasicDetailsForm> {
                           });
                           _nPFormKey.currentState!.save();
                           Navigator.of(context).pop();
-                          FirebaseFirestore.instance
-                              .doc(
-                                  'users_folder/folder/pandit_users/${Purohit(widget.documentSnapshot).uid}')
-                              .update({
+
+
+
+                          final id = FirebaseFirestore.instance
+                              .collection('/analytics_folder/folder/management_analytics/purohit/update')
+                              .add({
+                            "pandit_name": name,
+                            "pandit_id": "${Purohit(widget.documentSnapshot).uid}",
+                            'time_stamp': FieldValue.serverTimestamp(),
+                            'data': before.updatedFields(_verified, name, bio, mobile, age, state, city, experience, expertise, qualification, type,
+                                swastik, pictures, language, profile, cover)
+                          });
+
+                          FirebaseFirestore.instance.doc('users_folder/folder/pandit_users/${Purohit(widget.documentSnapshot).uid}').update({
                             "pandit_name": name,
                             "pandit_bio": bio,
                             "pandit_state": state,
@@ -197,8 +210,7 @@ class _PurohitBasicDetailsFormState extends State<PurohitBasicDetailsForm> {
                             "pandit_type": type,
                             "pandit_display_profile": profile,
                             "pandit_cover_profile": cover,
-                            "pandit_profile_update_date":
-                                FieldValue.arrayUnion([DateTime.now()]),
+                            "pandit_profile_update_date": FieldValue.arrayUnion([DateTime.now()]),
                             "pandit_language": language,
                             "pandit_expertise": expertise,
                             "pandit_experience": experience,
@@ -239,19 +251,13 @@ class _PurohitBasicDetailsFormState extends State<PurohitBasicDetailsForm> {
                         ),
                         const Text(
                           "Profile Pic",
-                          style: TextStyle(
-                              color: Colors.black54,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),
+                          style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         CustomImageUploader(
-                            imageHeight:
-                            MediaQuery.of(context).size.height*0.5,
-                            imageWidth:
-                            MediaQuery.of(context).size.height*0.25,
+                            imageHeight: MediaQuery.of(context).size.height * 0.5,
+                            imageWidth: MediaQuery.of(context).size.height * 0.25,
                             networkImageUrl: profile,
-                            path:
-                                'Users/${Purohit(widget.documentSnapshot).uid}/profilePicFile',
+                            path: 'Users/${Purohit(widget.documentSnapshot).uid}/profilePicFile',
                             onPressed: (String string) {
                               profile = string;
                             }),
@@ -260,19 +266,13 @@ class _PurohitBasicDetailsFormState extends State<PurohitBasicDetailsForm> {
                         ),
                         const Text(
                           "Cover Pic",
-                          style: TextStyle(
-                              color: Colors.black54,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),
+                          style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         CustomImageUploader(
-                            imageHeight:
-                            MediaQuery.of(context).size.height*0.5,
-                            imageWidth:
-                            MediaQuery.of(context).size.height*0.25,
+                            imageHeight: MediaQuery.of(context).size.height * 0.5,
+                            imageWidth: MediaQuery.of(context).size.height * 0.25,
                             networkImageUrl: cover,
-                            path:
-                                'Users/${Purohit(widget.documentSnapshot).uid}/coverPicFile',
+                            path: 'Users/${Purohit(widget.documentSnapshot).uid}/coverPicFile',
                             onPressed: (String string) {
                               cover = string;
                             }),
@@ -282,35 +282,21 @@ class _PurohitBasicDetailsFormState extends State<PurohitBasicDetailsForm> {
                         Container(
                           padding: EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                  color: Colors.blue,
-                                  width: 1,
-                                  style: BorderStyle.solid)),
+                              borderRadius: BorderRadius.circular(10), border: Border.all(color: Colors.blue, width: 1, style: BorderStyle.solid)),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
                                 "PANDIT ID: ${Purohit(widget.documentSnapshot).id}",
-                                style: const TextStyle(
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.bold),
+                                style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
                               ),
-                              Text(
-                                  "PANDIT UID: ${Purohit(widget.documentSnapshot).uid}",
-                                  style: const TextStyle(
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.bold)),
-                              Text(
-                                  "PANDIT EMAIL: ${Purohit(widget.documentSnapshot).email}",
-                                  style: const TextStyle(
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.bold)),
+                              Text("PANDIT UID: ${Purohit(widget.documentSnapshot).uid}",
+                                  style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.bold)),
+                              Text("PANDIT EMAIL: ${Purohit(widget.documentSnapshot).email}",
+                                  style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.bold)),
                               Text(
                                   "PANDIT JOINING DATE: ${DateTime.fromMicrosecondsSinceEpoch((Purohit(widget.documentSnapshot).joining).microsecondsSinceEpoch)}",
-                                  style: const TextStyle(
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.bold)),
+                                  style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.bold)),
                             ],
                           ),
                         ),
@@ -321,18 +307,12 @@ class _PurohitBasicDetailsFormState extends State<PurohitBasicDetailsForm> {
                             width: 200,
                             padding: EdgeInsets.all(20),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                    color: Colors.blue,
-                                    width: 1,
-                                    style: BorderStyle.solid)),
+                                borderRadius: BorderRadius.circular(10), border: Border.all(color: Colors.blue, width: 1, style: BorderStyle.solid)),
                             child: Column(
                               children: [
                                 const Text(
                                   "Pandit Verification",
-                                  style: TextStyle(
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.bold),
+                                  style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
                                 ),
                                 Switch(
                                   value: _verified,
@@ -351,12 +331,9 @@ class _PurohitBasicDetailsFormState extends State<PurohitBasicDetailsForm> {
                         Container(
                           padding: EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                          //    color: Colors.blue,
+                              //    color: Colors.blue,
                               borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                  color: Colors.blue,
-                                  width: 1,
-                                  style: BorderStyle.solid)),
+                              border: Border.all(color: Colors.blue, width: 1, style: BorderStyle.solid)),
                           child: Column(
                             children: [
                               CustomTextFormField(
@@ -482,31 +459,21 @@ class _PurohitBasicDetailsFormState extends State<PurohitBasicDetailsForm> {
                         Container(
                           padding: EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                  color: Colors.blue,
-                                  width: 1,
-                                  style: BorderStyle.solid)),
+                              borderRadius: BorderRadius.circular(10), border: Border.all(color: Colors.blue, width: 1, style: BorderStyle.solid)),
                           child: Column(
                             children: [
                               const Text(
                                 "Gallery",
-                                style: TextStyle(
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18),
+                                style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 18),
                               ),
                               const SizedBox(
                                 height: 20,
                               ),
                               CustomImageUploader(
                                   networkImageUrl: pictures![0],
-                                  imageHeight:
-                                  MediaQuery.of(context).size.height*0.5,
-                                  imageWidth:
-                                  MediaQuery.of(context).size.height*0.25,
-                                  path:
-                                      'Users/${Purohit(widget.documentSnapshot).uid}/1',
+                                  imageHeight: MediaQuery.of(context).size.height * 0.5,
+                                  imageWidth: MediaQuery.of(context).size.height * 0.25,
+                                  path: 'Users/${Purohit(widget.documentSnapshot).uid}/1',
                                   onPressed: (String string) {
                                     pictures![0] = string;
                                   }),
@@ -515,12 +482,9 @@ class _PurohitBasicDetailsFormState extends State<PurohitBasicDetailsForm> {
                               ),
                               CustomImageUploader(
                                   networkImageUrl: pictures![1],
-                                  imageHeight:
-                                  MediaQuery.of(context).size.height*0.5,
-                                  imageWidth:
-                                  MediaQuery.of(context).size.height*0.25,
-                                  path:
-                                      'Users/${Purohit(widget.documentSnapshot).uid}/2',
+                                  imageHeight: MediaQuery.of(context).size.height * 0.5,
+                                  imageWidth: MediaQuery.of(context).size.height * 0.25,
+                                  path: 'Users/${Purohit(widget.documentSnapshot).uid}/2',
                                   onPressed: (String string) {
                                     pictures![1] = string;
                                   }),
@@ -529,12 +493,9 @@ class _PurohitBasicDetailsFormState extends State<PurohitBasicDetailsForm> {
                               ),
                               CustomImageUploader(
                                   networkImageUrl: pictures![2],
-                                  imageHeight:
-                                  MediaQuery.of(context).size.height*0.5,
-                                  imageWidth:
-                                  MediaQuery.of(context).size.height*0.25,
-                                  path:
-                                      'Users/${Purohit(widget.documentSnapshot).uid}/3',
+                                  imageHeight: MediaQuery.of(context).size.height * 0.5,
+                                  imageWidth: MediaQuery.of(context).size.height * 0.25,
+                                  path: 'Users/${Purohit(widget.documentSnapshot).uid}/3',
                                   onPressed: (String string) {
                                     pictures![2] = string;
                                   }),
@@ -543,12 +504,9 @@ class _PurohitBasicDetailsFormState extends State<PurohitBasicDetailsForm> {
                               ),
                               CustomImageUploader(
                                   networkImageUrl: pictures![3],
-                                  imageHeight:
-                                  MediaQuery.of(context).size.height*0.5,
-                                  imageWidth:
-                                  MediaQuery.of(context).size.height*0.25,
-                                  path:
-                                      'Users/${Purohit(widget.documentSnapshot).uid}/4',
+                                  imageHeight: MediaQuery.of(context).size.height * 0.5,
+                                  imageWidth: MediaQuery.of(context).size.height * 0.25,
+                                  path: 'Users/${Purohit(widget.documentSnapshot).uid}/4',
                                   onPressed: (String string) {
                                     pictures![3] = string;
                                   }),
@@ -562,5 +520,99 @@ class _PurohitBasicDetailsFormState extends State<PurohitBasicDetailsForm> {
               ),
             ),
     );
+  }
+}
+
+class PunditData {
+  final bool _verified;
+  final String? name;
+  final String? bio;
+  final String? mobile;
+  final dynamic age;
+  final String? state;
+  final String? city;
+  final String? experience;
+  final String? expertise;
+  final String? qualification;
+  final String? type;
+  final dynamic swastik;
+  final List<dynamic>? pictures;
+  final String? language;
+  final String? profile;
+  final String? cover;
+
+  PunditData(this._verified, this.name, this.bio, this.mobile, this.age, this.state, this.city, this.experience, this.expertise, this.qualification,
+      this.type, this.swastik, this.pictures, this.language, this.profile, this.cover);
+
+  Map<String, Map<String, String>> updatedFields(
+      _verified, name, bio, mobile, age, state, city, experience, expertise, qualification, type, swastik, pictures, language, profile, cover) {
+    Map<String, String> after = {};
+    Map<String, String> before = {};
+    if (this.bio != bio) {
+      before['bio'] = "${this.name}";
+      after['bio'] = "${name}";
+    }
+    if (this.mobile != mobile) {
+      before['mobile'] = "${this.name}";
+      after['mobile'] = "${name}";
+    }
+    if (this.age != age) {
+      before['age'] = "${this.name}";
+      after['age'] = "${name}";
+    }
+    if (this.state != state) {
+      before['state'] = "${this.name}";
+      after['state'] = "${name}";
+    }
+    if (this.city != city) {
+      before['city'] = "${this.name}";
+      after['city'] = "${name}";
+    }
+    if (this.experience != experience) {
+      before['experience'] = "${this.name}";
+      after['experience'] = "${name}";
+    }
+    if (this.expertise != expertise) {
+      before['expertise'] = "${this.name}";
+      after['expertise'] = "${name}";
+    }
+    if (this.qualification != qualification) {
+      before['qualification'] = "${this.name}";
+      after['qualification'] = "${name}";
+    }
+    if (this.type != type) {
+      before['type'] = "${this.name}";
+      after['type'] = "${name}";
+    }
+    if (this.swastik != swastik) {
+      before['swastik'] = "${this.name}";
+      after['swastik'] = "${name}";
+    }
+    if (this.pictures != pictures) {
+      before['pictures'] = "${this.name}";
+      after['pictures'] = "${name}";
+    }
+    if (this.language != language) {
+      before['language'] = "${this.name}";
+      after['language'] = "${name}";
+    }
+    if (this.profile != profile) {
+      before['profile'] = "${this.name}";
+      after['profile'] = "${name}";
+    }
+    if (this.cover != cover) {
+      before['cover'] = "${this.name}";
+      after['cover'] = "${name}";
+    }
+    if (this.name != name) {
+      before['name'] = "${this.name}";
+      after['name'] = "${name}";
+    }
+    if (this._verified == _verified) {
+      before['_verified'] = "${this._verified}";
+      after['_verified'] = _verified;
+    }
+
+    return {'before': before, 'after': after};
   }
 }
