@@ -10,7 +10,10 @@ class Admin extends Role {
           'Puja',
           'Samagri',
           'Calender',
-          'Muhurat'
+          'Muhurat',
+          'Add Upcoming',
+          'Change Banner',
+          'Add Detail'
         ], availableContentEntryTabs: [
           'up'
         ], availablePanditActions: [

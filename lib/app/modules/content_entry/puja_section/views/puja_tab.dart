@@ -3,15 +3,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:management/app/modules/content_entry/puja_view/controller/puja_add_controller.dart';
-import 'package:management/app/modules/content_entry/puja_view/views/update_puja.dart';
 import 'package:management/app/modules/content_entry/samagri_section/view/samagri_add_delete.dart';
 import 'package:management/main.dart';
+import 'package:management/app/modules/content_entry/puja_section/views/update_puja.dart';
 import 'package:management/resources/app_components/function_cards.dart';
 import 'package:management/resources/app_components/menu_bar_tiles.dart';
 import 'package:management/resources/app_config.dart';
 import 'package:management/resources/app_exports.dart';
 import '../../../../../resources/app_strings.dart';
+import '../controller/puja_add_controller.dart';
 import 'add_new_puja.dart';
 
 class AddUpdatePuja extends StatelessWidget {

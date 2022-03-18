@@ -18,7 +18,6 @@ class ContentEntryView extends StatelessWidget {
             child: Wrap(
               children: [
 //TODO: role display options
-
                 ...Get.find<AuthDataController>().role.value.displayContentEntryFunctionCards(),
               ],
             )));
@@ -47,5 +46,23 @@ Map contentEntryFunctionCards = {
   'Muhurat': const FunctionCards(
     iconData: CupertinoIcons.calendar_today,
     text: 'Muhurat',
+  ),
+  'Add Upcoming': FunctionCards(
+    iconData: CupertinoIcons.calendar,
+    text: 'Add Upcoming',
+    ontap: () {
+      Get.toNamed('/home/${AppStrings.CONTENT_ENTRY}/upcoming/up');
+    },
+  ),
+  'Change Banner': FunctionCards(
+    iconData: CupertinoIcons.device_laptop,
+    text: 'Change Banner',
+  ),
+  'Add Detail': FunctionCards(
+    iconData: CupertinoIcons.viewfinder,
+    text: 'Add Detail',
+    ontap: () {
+      Get.toNamed('/home/${AppStrings.CONTENT_ENTRY}/detail');
+    },
   ),
 };

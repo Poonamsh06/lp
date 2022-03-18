@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:management/app/modules/content_entry/puja_view/controller/puja_add_controller.dart';
-
+import '../../app/modules/content_entry/puja_section/controller/puja_add_controller.dart';
 import '../app_exports.dart';
 
 class GodCheckBox extends GetView {
@@ -70,3 +69,57 @@ class BenefitCheckBox extends GetView {
   }
 }
 
+
+//______________________ CustomTextField_______________________//
+
+ Widget addCustomTextField(TextEditingController controller, hintText) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: TextFormField(
+          controller: controller,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.blue, width: 1.0),
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            fillColor: Colors.grey,
+
+            hintText: hintText,
+
+            //make hint text
+            hintStyle: const TextStyle(
+              color: Colors.grey,
+              fontSize: 16,
+              fontFamily: "verdana_regular",
+              fontWeight: FontWeight.w400,
+            ),
+
+            //create lable
+            labelText: hintText,
+            //lable style
+            labelStyle: const TextStyle(
+              color: Colors.grey,
+              fontSize: 16,
+              fontFamily: "verdana_regular",
+              fontWeight: FontWeight.w400,
+            ),
+          )),
+    );
+  }
+
+
+//___________________ Red Button ___________//
+
+  Container redButton(String text) {
+    return Container(
+      margin: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: Colors.red, width: 2.0)),
+      child: Text(text),
+    );
+  }

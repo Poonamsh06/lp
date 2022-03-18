@@ -2,6 +2,9 @@ import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:management/app/purohit_profile_mgmt/purohit_bank_details.dart';
+import 'package:management/app/purohit_profile_mgmt/purohit_basic_details_form.dart';
+import 'package:management/app/purohit_profile_mgmt/purohit_uidai_details.dart';
 import 'package:management/resources/app_exports.dart';
 import 'package:switcher/switcher.dart';
 
@@ -29,7 +32,7 @@ class PanditUserDetails extends StatelessWidget{
              child: CircularProgressIndicator(color: !Get.isDarkMode?Colors.white:Colors.black54,),
            ),);
          }
-          return  DefaultTabController(length: 5, child: Scaffold(
+          return  DefaultTabController(length: 6, child: Scaffold(
               backgroundColor: context.theme.backgroundColor,
               appBar: AppBar(
                 backgroundColor:Colors.transparent,
@@ -60,6 +63,9 @@ class PanditUserDetails extends StatelessWidget{
                       ),
                       Tab(
                         text: 'Bank detail',
+                      ),
+                       Tab(
+                        text: 'Addhar',
                       ),
                       Tab(
                         text: 'Gallery',
@@ -187,8 +193,9 @@ class PanditUserDetails extends StatelessWidget{
                       child: TabBarView(                            
                         children: [                              
                           PujaOffering(asyncSnapshot: snapshot),
-                          Icon(Icons.account_balance_wallet),
-                          Gallery(query: snapshot,galaryImages: snapshot.data!['pandit_pictures']??[],),
+                          PurohitBankDetails(uid: snapshot.data!['pandit_uid'],),
+                          PurohitUidaiDetails(uid: snapshot.data!['pandit_uid']),
+                          PurohitBasicDetailsForm(documentSnapshot: snapshot),
                           Icon(Icons.directions_bike),
                           PanditSetting(query: snapshot),
                         ],

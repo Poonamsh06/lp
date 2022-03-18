@@ -48,25 +48,52 @@ class HomeController extends GetxController {
   final Rx<List<Map<String, dynamic>>> foundPlayers =
       Rx<List<Map<String, dynamic>>>([]);
   RxString? keyword = ''.obs;
-  RxString? price = ''.obs;
+  //RxString? price = ''.obs;
   RxString? duration = ''.obs;
-  RxString? typeOfPuja = 'Puja for health'.obs;
+  var typeOfPuja = 'Puja for health'.obs;
+  void change(typeChange) => typeOfPuja.value = typeChange;
   final Rx<List<Map<String, dynamic>>> benefit =
       Rx<List<Map<String, dynamic>>>([{
-    'type':'Hapiness',
+    'type':'hapiness',
     'value' :false,
   },{
-    'type':'Wealth',
+    'type':'wealth',
     'value' :false,
-  }]);
+  },
+  {
+    'type':'prosperity',
+    'value':false,
+  }
+  ]);
  final Rx<List<Map<String, dynamic>>> god =
       Rx<List<Map<String, dynamic>>>([{
-    'type':'god vishnu',
+    'type':'vishnu',
     'value' :false,
   },{
-    'type':'god shiva',
+    'type':'shiva',
     'value' :false,
-  }]);
+  },
+  {
+    'type':'durga',
+    'value' :false,
+  },
+  {
+    'type':'kali',
+    'value' :false,
+  },
+  {
+    'type':'laxmi',
+    'value' :false,
+  },
+  {
+    'type':'ganesh',
+    'value' :false,
+  },
+  {
+    'type':'saraswati',
+    'value' :false,
+  },  
+  ]);
  
   @override
   void onInit() {
@@ -89,7 +116,8 @@ class HomeController extends GetxController {
           "id": element.id,
           "name": element['puja_item_name'][0],
           "selected": false,
-          "quantity": 'quantity'
+          "quantity": 'quantity',
+          "type" : "deliver"
         });
       });
     }).whenComplete(() {

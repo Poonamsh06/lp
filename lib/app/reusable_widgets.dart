@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:management/main.dart';
+import 'package:management/resources/app_components/custom_widgets.dart';
 
 Widget updateButton(action) {
   return superAdminActionButton(action, "Update");
@@ -17,11 +18,3 @@ Widget superAdminActionButton(action, title) {
   }
 }
 
-Widget redButton(String text) {
-  return Container(
-    margin: EdgeInsets.all(20),
-    padding: const EdgeInsets.all(10),
-    decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.red, width: 2.0)),
-    child: Text(text),
-  );
-}

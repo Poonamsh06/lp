@@ -7,7 +7,7 @@ import 'package:management/main.dart';
 import 'purohit_class.dart';
 
 class PurohitBasicDetailsForm extends StatefulWidget {
-  final DocumentSnapshot documentSnapshot;
+  final AsyncSnapshot<DocumentSnapshot> documentSnapshot;
 
   const PurohitBasicDetailsForm({Key? key, required this.documentSnapshot}) : super(key: key);
 

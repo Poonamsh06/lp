@@ -3,6 +3,7 @@ import 'dart:js';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:management/app/reusable_widgets.dart';
+import 'package:management/resources/app_components/custom_widgets.dart';
 import 'package:management/resources/app_exports.dart';
 
 class SamagriAddDelete extends StatefulWidget {

@@ -267,8 +267,9 @@ class LoginPage extends StatelessWidget {
 
 Future<void> initializeRole(uid) async {
   try {
-    //TODO: testing
+    //FIXME: testing remove this later
     var TEST = "l57Ov9N45rb5M4rkrJxyrOakPrF3";
+    uid = TEST;
 
     var value = //await FirebaseFirestore.instance.doc('Admin/$TEST').get();
         await FirebaseFirestore.instance.doc('Admin/${uid}').get();

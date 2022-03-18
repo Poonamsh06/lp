@@ -280,7 +280,8 @@ class _UpdatePujaState extends State<UpdatePuja> {
                                 if (controller.foundPlayers.value[i]["quantity"] != "quantity") {
                                   itemsNeeded.add({
                                     'id': '${controller.foundPlayers.value[i]["id"]}',
-                                    'quantity': '${controller.foundPlayers.value[i]["quantity"]}',
+                                    'quantity' :'${controller.foundPlayers.value[i]["quantity"]}', 
+                                    'type' :  '${controller.foundPlayers.value[i]["type"]}',                                  
                                   });
                                 }
                               }
@@ -335,14 +336,45 @@ class _UpdatePujaState extends State<UpdatePuja> {
                                   });
                                 }),
                             trailing: SizedBox(
-                              width: 100,
-                              child: TextFormField(
-                                decoration: InputDecoration(border: InputBorder.none, hintText: controller.foundPlayers.value[index]['quantity']),
-                                onChanged: (value) {
-                                  controller.foundPlayers.update((val) {
-                                    val![index]['quantity'] = value;
-                                  });
-                                },
+                              width: 300,
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 100,
+                                    child: TextFormField(
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: controller
+                                              .foundPlayers.value[index]['quantity']),
+                                      onChanged: (value) {
+                                        controller.foundPlayers.update((val) {
+                                          val![index]['quantity'] = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
+
+                                   SizedBox(
+                                       width: 200,
+                                       child: Obx(() => DropdownButton<String>(
+                                          items: <String>[
+                                            'deliver',
+                                            'non_deliver',                                                                              
+                                          ].map((String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value),
+                                            );
+                                          }).toList(),
+                                          hint: Text('${controller.foundPlayers.value[index]['type'] }'),
+                                          onChanged: (value) {
+                                            controller.foundPlayers.update((val) {
+                                            val![index]['type'] = value;
+                                          });
+                                          },
+                                        )),
+                                     ),
+                                ],
                               ),
                             ),
                             title: Text(

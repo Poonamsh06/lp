@@ -10,8 +10,11 @@ class SuperAdmin extends Role {
           'Puja',
           'Samagri',
           'Calender',
-          'Muhurat'
-        ], availableContentEntryTabs: [
+          'Muhurat',
+          'Add Upcoming',
+          'Change Banner',
+          'Add Detail'
+            ], availableContentEntryTabs: [
           'up',
           'rp',
           'an'

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:management/app/purohit_profile_mgmt/purohit_profile_landing_page.dart';
 
 import '../../resources/app_components/custom_searchable_dropdown.dart';
 import '../modules/management/models/pandit_users_model.dart';
@@ -76,10 +75,7 @@ class PurohitTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => PurohitProfileLandingPage(
-                  documentSnapshot: documentSnapshot,
-                )));
+       
       },
       contentPadding: const EdgeInsets.all(10),
       leading: Image.network(Purohit(documentSnapshot).profileUrl),

@@ -34,13 +34,13 @@ class _AddNewPujaState extends State<AddNewPuja> {
         List.generate(11, (i) => TextEditingController());
     List<Widget> _nameTextFields = List.generate(
       11,
-      (index) => addPujaTextField(_name[index], "Puja Name $index"),
+      (index) => addCustomTextField(_name[index], "Puja Name $index"),
     );
     List<TextEditingController> _benifits =
         List.generate(11, (i) => TextEditingController());
     List<Widget> _benefits = List.generate(
       11,
-      (index) => addPujaTextField(_benifits[index], "Puja Benefits $index"),
+      (index) => addCustomTextField(_benifits[index], "Puja Benefits $index"),
     );
 
     List<TextEditingController> _description =
@@ -48,7 +48,7 @@ class _AddNewPujaState extends State<AddNewPuja> {
     List<Widget> _descriptionTextFields = List.generate(
       11,
       (index) =>
-          addPujaTextField(_description[index], "Puja Description $index"),
+          addCustomTextField(_description[index], "Puja Description $index"),
     );
     TextEditingController keyword = TextEditingController();
     TextEditingController price = TextEditingController();
@@ -57,7 +57,7 @@ class _AddNewPujaState extends State<AddNewPuja> {
     return Padding(
       padding: ResponsiveWidget.isSmallScreen(context)
           ? EdgeInsets.all(0)
-          : EdgeInsets.only(left: Get.width * 0.15, right: Get.width * 0.07),
+          : EdgeInsets.only(left: Get.width * 0.05, right: Get.width * 0.05),
       child: Row(
         children: [
           Expanded(
@@ -137,17 +137,17 @@ class _AddNewPujaState extends State<AddNewPuja> {
                       collapsed: const SizedBox(),
                       expanded: Column(children: _benefits)),
                   ExpandablePanel(
-                    header: addPujaTextField(keyword, "Puja Keyword"),
+                    header: addCustomTextField(keyword, "Puja Keyword"),
                     collapsed: const SizedBox(),
                     expanded: const SizedBox(),
                   ),
                   ExpandablePanel(
-                    header: addPujaTextField(duration, "Puja Duration"),
+                    header: addCustomTextField(duration, "Puja Duration"),
                     collapsed: const SizedBox(),
                     expanded: SizedBox(),
                   ),
                   ExpandablePanel(
-                    header: addPujaTextField(price, "Puja price"),
+                    header: addCustomTextField(price, "Puja price"),
                     collapsed: const SizedBox(),
                     expanded: SizedBox(),
                   ),
@@ -162,24 +162,26 @@ class _AddNewPujaState extends State<AddNewPuja> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Obx(() => DropdownButton<String>(
+                   DropdownButton<String>(
                         items: <String>[
-                          'Puja for health',
+                          'Puja for Health',
                           'Puja for Wealth',
-                          'Ceremony Puja'
+                          'Ceremony Puja',
+                          'Katha & Path',
+                          'Festival Puja',
+                          'Puja for Study'
                         ].map((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
                           );
                         }).toList(),
-                        hint: Text('${controller.typeOfPuja!.value}'),
+                        hint: Obx(() => Text(controller.typeOfPuja.value)),
                         onChanged: (value) {
-                          controller.typeOfPuja!.update((val) {
-                            val = value;
-                          });
+                         controller.change(value);
+                         print(controller.typeOfPuja);
                         },
-                      )),
+                      ),
                   const SizedBox(
                     height: 20,
                   ),
@@ -243,7 +245,7 @@ class _AddNewPujaState extends State<AddNewPuja> {
                                 'puja_ceremony_standard_duration':
                                     duration.text,
                                 'puja_ceremony_type_filter':
-                                    controller.typeOfPuja!.value,
+                                    controller.typeOfPuja.value,
                                 'puja_ceremony_id': pujaId,
                                 'puja_ceremony_promise':
                                     FieldValue.arrayUnion(promises),
@@ -265,6 +267,8 @@ class _AddNewPujaState extends State<AddNewPuja> {
                                         '${controller.foundPlayers.value[i]["id"]}',
                                     'quantity':
                                         '${controller.foundPlayers.value[i]["quantity"]}',
+                                    'type':
+                                        '${controller.foundPlayers.value[i]["type"]}',
                                   });
                                 }
                               }
@@ -328,17 +332,46 @@ class _AddNewPujaState extends State<AddNewPuja> {
                                   });
                                 }),
                             trailing: SizedBox(
-                              width: 100,
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: controller
-                                        .foundPlayers.value[index]['quantity']),
-                                onChanged: (value) {
-                                  controller.foundPlayers.update((val) {
-                                    val![index]['quantity'] = value;
-                                  });
-                                },
+                              width: 300,
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 100,
+                                    child: TextFormField(
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: controller.foundPlayers
+                                              .value[index]['quantity']),
+                                      onChanged: (value) {
+                                        controller.foundPlayers.update((val) {
+                                          val![index]['quantity'] = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 200,
+                                    child: Obx(() => DropdownButton<String>(
+                                          items: <String>[
+                                            'deliver',
+                                            'non_deliver',
+                                          ].map((String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value),
+                                            );
+                                          }).toList(),
+                                          hint: Text(
+                                              '${controller.foundPlayers.value[index]['type']}'),
+                                          onChanged: (value) {
+                                            controller.foundPlayers
+                                                .update((val) {
+                                              val![index]['type'] = value;
+                                            });
+                                          },
+                                        )),
+                                  ),
+                                ],
                               ),
                             ),
                             title: Text(
@@ -356,52 +389,7 @@ class _AddNewPujaState extends State<AddNewPuja> {
     );
   }
 
-  Container redButton(String text) {
-    return Container(
-      margin: EdgeInsets.all(20),
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.red, width: 2.0)),
-      child: Text(text),
-    );
-  }
+  
 
-  Widget addPujaTextField(TextEditingController controller, hintText) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: TextFormField(
-          controller: controller,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.blue, width: 1.0),
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            fillColor: Colors.grey,
-
-            hintText: hintText,
-
-            //make hint text
-            hintStyle: TextStyle(
-              color: Colors.grey,
-              fontSize: 16,
-              fontFamily: "verdana_regular",
-              fontWeight: FontWeight.w400,
-            ),
-
-            //create lable
-            labelText: hintText,
-            //lable style
-            labelStyle: TextStyle(
-              color: Colors.grey,
-              fontSize: 16,
-              fontFamily: "verdana_regular",
-              fontWeight: FontWeight.w400,
-            ),
-          )),
-    );
-  }
+ 
 }
