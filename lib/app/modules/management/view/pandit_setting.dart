@@ -6,8 +6,8 @@ import '../controller/pandit_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:management/main.dart';
 import 'package:management/resources/app_exports.dart';
-import 'package:management/roles/role_a.dart';
-import 'package:management/roles/role_b.dart';
+import 'package:management/roles/admin.dart';
+import 'package:management/roles/super_admin.dart';
 import 'package:switcher/switcher.dart';
 
 class PanditSetting extends StatelessWidget {

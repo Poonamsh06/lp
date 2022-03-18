@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:management/app/purohit_profile_mgmt/reusable_widgets.dart';
+import 'package:management/app/reusable_widgets.dart';
 
 class PurohitServiceAddAndEdit extends StatefulWidget {
   final DocumentSnapshot? documentSnapshot;
@@ -79,9 +80,12 @@ class _PurohitServiceAddAndEditState extends State<PurohitServiceAddAndEdit> {
                   initialText: "$additionalDetails",
                   onPress: (value) {
                     additionalDetails = value;
+                    
                   }),
-              TextButton(
-                  onPressed: () {
+
+
+updateButton(
+() {
                     _njPFormKey.currentState!.save();
                     if(widget.documentSnapshot==null){
                       FirebaseFirestore.instance
@@ -106,8 +110,8 @@ class _PurohitServiceAddAndEditState extends State<PurohitServiceAddAndEdit> {
 
                     print("$price $additionalDetails $time");
                     Navigator.of(context).pop();
-                  },
-                  child: Text("Update"))
+                  }
+)
             ],
           ),
         ),

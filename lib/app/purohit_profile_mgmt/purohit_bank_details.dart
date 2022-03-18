@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:management/app/purohit_profile_mgmt/reusable_widgets.dart';
+import 'package:management/app/reusable_widgets.dart';
 
 class PurohitBankDetails extends StatelessWidget {
   final uid;
@@ -15,34 +16,24 @@ class PurohitBankDetails extends StatelessWidget {
     String? name = "";
     String? bankName = "";
     return Scaffold(
-
       body: StreamBuilder<DocumentSnapshot>(
-          stream: FirebaseFirestore.instance
-              .doc(
-                  'users_folder/folder/pandit_users/$uid/pandit_credentials/pandit_bank_details')
-              .snapshots(),
+          stream: FirebaseFirestore.instance.doc('users_folder/folder/pandit_users/$uid/pandit_credentials/pandit_bank_details').snapshots(),
           builder: (context, snapshot) {
             if (snapshot.data == null) {
               return Center(
                 child: CircularProgressIndicator(),
               );
             }
-            if(!snapshot.data!.exists){
-              return Center(child: Text("Not Exist"),);
+            if (!snapshot.data!.exists) {
+              return Center(
+                child: Text("Not Exist"),
+              );
             }
 
-            number = snapshot.data!.get('pandit_bank_account_number') == null
-                ? ""
-                : snapshot.data!.get('pandit_bank_account_number');
-            ifsc = snapshot.data!.get('pandit_bank_ifsc_code') == null
-                ? ""
-                : snapshot.data!.get('pandit_bank_ifsc_code');
-            bankName = snapshot.data!.get('pandit_bank_name') == null
-                ? ""
-                : snapshot.data!.get('pandit_bank_name');
-            name = snapshot.data!.get('pandit_name_on_bank') == null
-                ? ""
-                : snapshot.data!.get('pandit_name_on_bank');
+            number = snapshot.data!.get('pandit_bank_account_number') == null ? "" : snapshot.data!.get('pandit_bank_account_number');
+            ifsc = snapshot.data!.get('pandit_bank_ifsc_code') == null ? "" : snapshot.data!.get('pandit_bank_ifsc_code');
+            bankName = snapshot.data!.get('pandit_bank_name') == null ? "" : snapshot.data!.get('pandit_bank_name');
+            name = snapshot.data!.get('pandit_name_on_bank') == null ? "" : snapshot.data!.get('pandit_name_on_bank');
 
             return Center(
               child: Form(
@@ -77,24 +68,18 @@ class PurohitBankDetails extends StatelessWidget {
                       lable: "Pandit bank account number",
                       initialText: number,
                     ),
-                    TextButton(
-                        onPressed: () {
-                          _tMKformKey.currentState!.save();
-                          FirebaseFirestore.instance
-                              .doc(
-                                  'users_folder/folder/pandit_users/$uid/pandit_credentials/pandit_bank_details')
-                              .set({
-                            'pandit_bank_account_number': number,
-                            'pandit_bank_ifsc_code': ifsc,
-                            'pandit_bank_name': bankName,
-                            'pandit_name_on_bank': name
-                          }).whenComplete(() => Navigator.of(context).pop());
-                        },
-                        child: Text(
-                          "Update",
-                          style: TextStyle(
-                              color: Colors.blue, fontWeight: FontWeight.bold),
-                        ))
+                    updateButton(() {
+                      _tMKformKey.currentState!.save();
+                      FirebaseFirestore.instance
+                          .doc(
+                              'users_folder/folder/pandit_users/$uid/pandit_credentials/pandit_bank_details')
+                          .set({
+                        'pandit_bank_account_number': number,
+                        'pandit_bank_ifsc_code': ifsc,
+                        'pandit_bank_name': bankName,
+                        'pandit_name_on_bank': name
+                      }).whenComplete(() => Navigator.of(context).pop());
+                    }),
                   ],
                 ),
               ),

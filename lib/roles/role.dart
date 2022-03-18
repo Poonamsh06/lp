@@ -1,13 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:management/app/modules/content_entry/content_entry_view.dart';
 import 'package:management/app/modules/content_entry/puja_view/views/puja_tab.dart';
+import 'package:management/app/modules/home/view/home_view.dart';
+import 'package:management/app/purohit_profile_mgmt/purohit_profile_landing_page.dart';
+import 'package:management/roles/admin.dart';
+import 'package:management/roles/super_admin.dart';
 
 abstract class Role {
+  List availablePanditActions;
+
   Role? get role;
   List availableContentEntryFunctionCards;
   List availableContentEntryTabs;
+  List availableFeatures;
 
-  Role({required this.availableContentEntryFunctionCards, required this.availableContentEntryTabs});
+  Role(
+      {required this.availableContentEntryFunctionCards,
+      required this.availableContentEntryTabs,
+      required this.availablePanditActions,
+      required this.availableFeatures});
+
+  canUpdate() {
+    return role is SuperAdmin;
+  }
 
   displayContentEntryFunctionCards() {
     List display = [];
@@ -19,6 +34,22 @@ abstract class Role {
     Map all = pujaTabs(tab);
     List display = [];
     initializeFields(availableContentEntryTabs, display, all);
+    return display;
+  }
+
+  displayPanditActions(currentPage) {
+    Map all = panditActions(currentPage);
+    List display = [];
+
+    initializeFields(availablePanditActions, display, all);
+    return display;
+  }
+
+  displayFeatures(context, tab) {
+    Map all = allFeatures(context, tab);
+    List display = [];
+
+    initializeFields(availableFeatures, display, all);
     return display;
   }
 

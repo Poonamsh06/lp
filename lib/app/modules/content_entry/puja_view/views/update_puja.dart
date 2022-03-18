@@ -4,6 +4,7 @@ import 'package:expandable/expandable.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:management/app/reusable_widgets.dart';
 import 'package:management/resources/app_components/custom_widgets.dart';
 
 import '../../../../../resources/app_exports.dart';
@@ -43,15 +44,15 @@ class PujaData {
       List<dynamic> updateName, List<dynamic> updateDescription) {
     Map<String, String> after = {};
     Map<String, String> before = {};
-    if (this.keyword!= keyword) {
+    if (this.keyword != keyword) {
       before['keyword'] = "${this.keyword}";
       after['keyword'] = "$keyword";
     }
-    if (this.price!= price) {
+    if (this.price != price) {
       before['price'] = "${this.price}";
       after['price'] = "$price";
     }
-    if (this.duration!= duration) {
+    if (this.duration != duration) {
       before['duration'] = "${this.duration}";
       after['duration'] = "$duration";
     }
@@ -98,8 +99,8 @@ class _UpdatePujaState extends State<UpdatePuja> {
       (index) => addPujaTextField(_description[index], "Puja Description $index"),
     );
     TextEditingController keyword = TextEditingController(text: widget.beforeUpdatePuja.keyword);
-    TextEditingController price =  TextEditingController(text: widget.beforeUpdatePuja.price);
-    TextEditingController duration =  TextEditingController(text: widget.beforeUpdatePuja.duration);
+    TextEditingController price = TextEditingController(text: widget.beforeUpdatePuja.price);
+    TextEditingController duration = TextEditingController(text: widget.beforeUpdatePuja.duration);
 
     return Padding(
       padding: ResponsiveWidget.isSmallScreen(context) ? const EdgeInsets.all(0) : EdgeInsets.only(left: Get.width * 0.15, right: Get.width * 0.07),
@@ -191,8 +192,8 @@ class _UpdatePujaState extends State<UpdatePuja> {
                   const SizedBox(
                     height: 20,
                   ),
-                  InkWell(
-                    onTap: () {
+                  updateButton(
+                    () {
                       Get.defaultDialog(
                           contentPadding: EdgeInsets.all(20),
                           title: "Warning",
@@ -301,7 +302,6 @@ class _UpdatePujaState extends State<UpdatePuja> {
                             Get.back();
                           });
                     },
-                    child: redButton("Submit"),
                   )
                 ],
               ),
@@ -357,15 +357,6 @@ class _UpdatePujaState extends State<UpdatePuja> {
           ),
         ],
       ),
-    );
-  }
-
-  Container redButton(String text) {
-    return Container(
-      margin: EdgeInsets.all(20),
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.red, width: 2.0)),
-      child: Text(text),
     );
   }
 

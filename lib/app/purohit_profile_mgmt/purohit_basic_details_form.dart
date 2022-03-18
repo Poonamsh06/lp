@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:management/app/purohit_profile_mgmt/reusable_widgets.dart';
+import 'package:management/main.dart';
 
 import 'purohit_class.dart';
 
@@ -167,71 +169,69 @@ class _PurohitBasicDetailsFormState extends State<PurohitBasicDetailsForm> {
     }
     final _nPFormKey = GlobalKey<FormState>();
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: Text("Save"),
-        onPressed: () {
-          showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: Text("Profile update"),
-                  content: Text("Are you sure that you want to update?"),
-                  actions: [
-                    TextButton(
-                        onPressed: () {
-                          setState(() {
-                            updating = true;
-                          });
-                          _nPFormKey.currentState!.save();
-                          Navigator.of(context).pop();
+      floatingActionButton: Get.find<AuthDataController>().role.value.canUpdate()
+          ? FloatingActionButton(
+              child: Text("Save"),
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("Profile update"),
+                        content: Text("Are you sure that you want to update?"),
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  updating = true;
+                                });
+                                _nPFormKey.currentState!.save();
+                                Navigator.of(context).pop();
 
+                                final id = FirebaseFirestore.instance.collection('/analytics_folder/folder/management_analytics/purohit/update').add({
+                                  "pandit_name": name,
+                                  "pandit_id": "${Purohit(widget.documentSnapshot).uid}",
+                                  'time_stamp': FieldValue.serverTimestamp(),
+                                  'data': before.updatedFields(_verified, name, bio, mobile, age, state, city, experience, expertise, qualification,
+                                      type, swastik, pictures, language, profile, cover)
+                                });
 
-
-                          final id = FirebaseFirestore.instance
-                              .collection('/analytics_folder/folder/management_analytics/purohit/update')
-                              .add({
-                            "pandit_name": name,
-                            "pandit_id": "${Purohit(widget.documentSnapshot).uid}",
-                            'time_stamp': FieldValue.serverTimestamp(),
-                            'data': before.updatedFields(_verified, name, bio, mobile, age, state, city, experience, expertise, qualification, type,
-                                swastik, pictures, language, profile, cover)
-                          });
-
-                          FirebaseFirestore.instance.doc('users_folder/folder/pandit_users/${Purohit(widget.documentSnapshot).uid}').update({
-                            "pandit_name": name,
-                            "pandit_bio": bio,
-                            "pandit_state": state,
-                            "pandit_city": city,
-                            "pandit_age": age,
-                            "pandit_qualification": qualification,
-                            "pandit_verification_status": _verified,
-                            "pandit_mobile_number": mobile,
-                            "pandit_swastik": swastik,
-                            "pandit_type": type,
-                            "pandit_display_profile": profile,
-                            "pandit_cover_profile": cover,
-                            "pandit_profile_update_date": FieldValue.arrayUnion([DateTime.now()]),
-                            "pandit_language": language,
-                            "pandit_expertise": expertise,
-                            "pandit_experience": experience,
-                            "pandit_pictures": pictures,
-                          }).whenComplete(() {
-                            setState(() {
-                              updating = false;
-                            });
-                          });
-                        },
-                        child: Text("Update")),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text("Cancel"))
-                  ],
-                );
-              });
-        },
-      ),
+                                FirebaseFirestore.instance.doc('users_folder/folder/pandit_users/${Purohit(widget.documentSnapshot).uid}').update({
+                                  "pandit_name": name,
+                                  "pandit_bio": bio,
+                                  "pandit_state": state,
+                                  "pandit_city": city,
+                                  "pandit_age": age,
+                                  "pandit_qualification": qualification,
+                                  "pandit_verification_status": _verified,
+                                  "pandit_mobile_number": mobile,
+                                  "pandit_swastik": swastik,
+                                  "pandit_type": type,
+                                  "pandit_display_profile": profile,
+                                  "pandit_cover_profile": cover,
+                                  "pandit_profile_update_date": FieldValue.arrayUnion([DateTime.now()]),
+                                  "pandit_language": language,
+                                  "pandit_expertise": expertise,
+                                  "pandit_experience": experience,
+                                  "pandit_pictures": pictures,
+                                }).whenComplete(() {
+                                  setState(() {
+                                    updating = false;
+                                  });
+                                });
+                              },
+                              child: Text("Update")),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text("Cancel"))
+                        ],
+                      );
+                    });
+              },
+            )
+          : SizedBox(),
       body: updating
           ? Center(
               child: Text("Please wait"),

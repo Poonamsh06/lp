@@ -18,6 +18,8 @@ class ContentEntryView extends StatelessWidget {
             child: Wrap(
               children: [
 //TODO: role display options
+
+                ...Get.find<AuthDataController>().role.value.displayContentEntryFunctionCards(),
               ],
             )));
   }
