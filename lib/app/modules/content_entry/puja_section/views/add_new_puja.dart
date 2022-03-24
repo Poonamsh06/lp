@@ -10,24 +10,17 @@ import '../../../../../resources/app_exports.dart';
 import '../../../../../resources/responshive.dart';
 import '../controller/puja_add_controller.dart';
 
-class AddNewPuja extends StatefulWidget {
-  final AsyncSnapshot<DocumentSnapshot>? fields;
-  final bool? edit;
-
-  const AddNewPuja({Key? key, this.fields, this.edit}) : super(key: key);
-
-  @override
-  State<AddNewPuja> createState() => _AddNewPujaState();
-}
-
 String pujaId =
     "PJID${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}${DateTime.now().hour}${DateTime.now().minute}${DateTime.now().second}";
 
-class _AddNewPujaState extends State<AddNewPuja> {
-  String image =
-      'https://www.kindpng.com/picc/m/78-785827_user-profile-avatar-login-account-male-user-icon.png';
-  HomeController controller = Get.put(HomeController());
 
+
+class AddNewPuja extends StatelessWidget {
+   late final AsyncSnapshot<DocumentSnapshot>? fields;
+  late final bool? edit;
+  RxString image =
+      'https://www.kindpng.com/picc/m/78-785827_user-profile-avatar-login-account-male-user-icon.png'.obs;
+  HomeController controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     List<TextEditingController> _name =
@@ -67,12 +60,12 @@ class _AddNewPujaState extends State<AddNewPuja> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
+                Obx((() =>   Container(
                     alignment: Alignment.topRight,
                     height: 100,
                     width: 100,
                     decoration: BoxDecoration(
-                      image: DecorationImage(image: NetworkImage(image)),
+                      image: DecorationImage(image: NetworkImage(image.value)),
                     ),
                     child: TextButton(
                         onPressed: () {
@@ -110,10 +103,7 @@ class _AddNewPujaState extends State<AddNewPuja> {
                                                 String downloadUrl =
                                                     await snapshot.ref
                                                         .getDownloadURL();
-                                                setState(() {
-                                                  image = downloadUrl;
-                                                  //widget.onPressed(downloadUrl);
-                                                });
+                                                 image.value = downloadUrl;
                                               });
                                             });
                                             Navigator.of(context).pop();
@@ -123,7 +113,9 @@ class _AddNewPujaState extends State<AddNewPuja> {
                                   ));
                         },
                         child: Text("Edit")),
-                  ),
+                  )
+                )
+                ),
                   ExpandablePanel(
                       header: redButton("Add Name"),
                       collapsed: const SizedBox(),

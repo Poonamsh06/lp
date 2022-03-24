@@ -7,13 +7,9 @@ import '../../../../resources/app_components/custom_searchable_dropdown.dart';
 import '../../../../resources/app_strings.dart';
 import '../models/pandit_users_model.dart';
 
-class ClientUserList extends StatefulWidget{
-  @override
-  State<ClientUserList> createState() => _ClientUserListState();
-}
+class ClientUserList extends StatelessWidget{
 
-class _ClientUserListState extends State<ClientUserList> {
-  int limit = 20;
+  var limit = 20.obs;
   bool location = false;
   @override
   Widget build(BuildContext context) {
@@ -21,7 +17,7 @@ class _ClientUserListState extends State<ClientUserList> {
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: FutureBuilder<QuerySnapshot>(
-          future: FirebaseFirestore.instance.collection('users_folder/folder/client_users').orderBy("client_joining_date",descending: true).limit(limit).get(),          
+          future: FirebaseFirestore.instance.collection('users_folder/folder/client_users').orderBy("client_joining_date",descending: true).limit(limit.value).get(),          
           builder: (context, snapshot) {
             if(snapshot.data!=null){  
                  List<DropdownMenuItem> list = List<DropdownMenuItem>.generate(
@@ -51,14 +47,16 @@ class _ClientUserListState extends State<ClientUserList> {
                             displayClearIcon: false,
                           ),
                      SizedBox(width: 10,),
+                    Obx(() => 
                     TextButton(
+                        
+                        onPressed: (){
                       
-                      onPressed: (){
+                       increment(limit.value);
                        
-                      setState(() {
-                        limit = limit+10;
-                      });
-                    }, child: Text("Icrement by 10",style: TextStyle(color: Get.isDarkMode?Colors.white:Colors.black54))),                                       
+                                       
+                      }, child: Text("Icrement by 10",style: TextStyle(color: Get.isDarkMode?Colors.white:Colors.black54))),
+                    ),                                       
                   ],
                 ),
                 const SizedBox(
@@ -131,9 +129,6 @@ class _ClientUserListState extends State<ClientUserList> {
 
 
 
-//  'id': '${element.get('client_uid')}',
-//                     'name': '${element.get('client_name')}',
-//                     'age': element.get('client_age'),
-//                     'location': element.get('client_location'),
-//                     'number': element.get('client_mobile_number') ?? '',
-//                     'email': element.get('client_email') ?? ''
+increment( var limit){
+  limit =limit+10;
+}
