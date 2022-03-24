@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:management/app/modules/content_entry/content_entry_view.dart';
 import 'package:management/app/modules/content_entry/puja_section/views/puja_tab.dart';
 import 'package:management/app/modules/home/view/home_view.dart';
-import 'package:management/app/purohit_profile_mgmt/purohit_profile_landing_page.dart';
-import 'package:management/roles/admin.dart';
 import 'package:management/roles/super_admin.dart';
 
 abstract class Role {
@@ -38,10 +36,10 @@ abstract class Role {
   }
 
   displayPanditActions(currentPage) {
-    Map all = panditActions(currentPage);
+    // Map all = panditActions(currentPage);
     List display = [];
 
-    initializeFields(availablePanditActions, display, all);
+    // initializeFields(availablePanditActions, display, all);
     return display;
   }
 

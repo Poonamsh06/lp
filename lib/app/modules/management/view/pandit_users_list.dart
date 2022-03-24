@@ -7,13 +7,9 @@ import '../../../../resources/app_components/custom_searchable_dropdown.dart';
 import '../../../../resources/app_strings.dart';
 import '../models/pandit_users_model.dart';
 
-class PanditUserList extends StatefulWidget{
-  @override
-  State<PanditUserList> createState() => _PanditUserListState();
-}
-
-class _PanditUserListState extends State<PanditUserList> {
-  int limit = 20;
+class PanditUserList extends StatelessWidget{
+ 
+  var limit = 20.obs;
   bool location = false;
   @override
   Widget build(BuildContext context) {
@@ -21,7 +17,7 @@ class _PanditUserListState extends State<PanditUserList> {
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: FutureBuilder<QuerySnapshot>(
-          future: FirebaseFirestore.instance.collection('users_folder/folder/pandit_users').orderBy("pandit_joining_date",descending: true).limit(limit).get(),          
+          future: FirebaseFirestore.instance.collection('users_folder/folder/pandit_users').orderBy("pandit_joining_date",descending: true).limit(limit.value).get(),          
           builder: (context, snapshot) {
             if(snapshot.data!=null){  
                  List<DropdownMenuItem> list = List<DropdownMenuItem>.generate(
@@ -55,9 +51,8 @@ class _PanditUserListState extends State<PanditUserList> {
                       
                       onPressed: (){
                        
-                      setState(() {
-                        limit = limit+10;
-                      });
+                      increment(limit.value);
+
                     }, child: Text("Icrement by 10",style: TextStyle(color: Get.isDarkMode?Colors.white:Colors.black54))),                                       
                   ],
                 ),
@@ -136,3 +131,7 @@ class _PanditUserListState extends State<PanditUserList> {
   }
 }
 
+
+increment( var limit){
+  limit =limit+10;
+}
