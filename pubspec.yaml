@@ -36,6 +36,7 @@ dependencies:
   twilio_flutter: ^0.0.9
   system_theme: ^1.0.1
   get: ^4.6.1
+  shared_preferences: ^2.0.13
   #get: ^5.0.0-beta.50
   firebase_auth: ^3.3.9
   cloud_firestore: ^3.1.10
