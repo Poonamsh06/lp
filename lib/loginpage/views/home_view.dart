@@ -90,35 +90,62 @@ class LoginPage extends StatelessWidget {
                               const SizedBox(
                                 height: 20,
                               ),
-                              TextFormField(
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
+                              // Theme(
+                              //   data: ThemeData(
+                              //     primaryColor: Colors.blue,
+                              //     primaryColorDark: Colors.black
+
+
+                              //   ),
+
+                                
+                                 TextFormField(
+                                  style: TextStyle(color: Colors.red),
+                                  decoration: InputDecoration( fillColor: Colors.white,
+                                  filled: true,
+                                    border: OutlineInputBorder(
+                                      
+                                     borderRadius: 
+                                     BorderRadius.circular(20),
+                                     borderSide: BorderSide(color: Colors.blue,width: 1.0)
+                                    ),
+                                    labelText: "Email",
+                                    hintText: "name@example.com",
+                                    prefixIcon: const Icon(Icons.email),
                                   ),
-                                  labelText: "Email",
-                                  hintText: "name@example.com",
-                                  prefixIcon: const Icon(Icons.email),
-                                ),
-                                keyboardType: TextInputType.emailAddress,
-                                controller: controller.emailController,
-                                onSaved: (value) {
-                                  controller.email = value!;
-                                },
-                                validator: (value) {
-                                  return controller.validateEmail(value!);
-                                },
-                              ),
+                                  keyboardType: TextInputType.emailAddress,
+                                  controller: controller.emailController,
+                                  onSaved: (value) {
+                                    controller.email = value!;
+                                  },
+                                  validator: (value) {
+                                    return controller.validateEmail(value!);
+                                  },                              ),
+                              
                               const SizedBox(
                                 height: 16,
                               ),
-                              TextFormField(
-                                decoration: InputDecoration(
+                                //  Theme(
+                                // data: ThemeData(
+                                //   primaryColor: Colors.blue,
+                                //   primaryColorDark: Colors.black
+
+
+                                // ),
+
+                              TextFormField(style: TextStyle(color: Colors.red),
+                                decoration: InputDecoration( fillColor: Colors.white,
+                                filled: true,
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20),
+                                     borderSide: BorderSide(color: Colors.blue,width: 1.0)
+
                                   ),
+                                 // fillColor: Colors.black,
                                   labelText: "Password",
                                   prefixIcon: const Icon(FontAwesomeIcons.key),
                                 ),
+                             
                                 keyboardType: TextInputType.visiblePassword,
                                 obscureText: true,
                                 controller: controller.passwordController,
@@ -164,6 +191,7 @@ class LoginPage extends StatelessWidget {
                                     shape: MaterialStateProperty.all(
                                       RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(22),
+                                        
                                       ),
                                     ),
                                     backgroundColor: MaterialStateProperty.all(
