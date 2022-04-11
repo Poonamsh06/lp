@@ -11,6 +11,7 @@ import 'package:management/roles/admin.dart';
 import 'package:management/roles/no_user.dart';
 import 'package:management/roles/super_admin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../resources/responshive.dart';
 import '../widgets.dart';
 
 // nu:
@@ -50,6 +51,7 @@ class LoginPage extends StatelessWidget {
                     child: Container(
                       margin: const EdgeInsets.only(left: 28, right: 28),
                       height: context.height,
+                      width: ResponsiveWidget.isSmallScreen(context)? context.width :context.width*0.4,
                       child: SingleChildScrollView(
                         child: Form(
                           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -62,7 +64,7 @@ class LoginPage extends StatelessWidget {
                                 children: [
                                   Align(
                                     alignment: Alignment.topRight,
-                                    child: DropdownButton(
+                                    child: DropdownButton( 
                                       elevation: 0,
                                       items: const [
                                         DropdownMenuItem(
@@ -90,24 +92,20 @@ class LoginPage extends StatelessWidget {
                               const SizedBox(
                                 height: 20,
                               ),
-                              // Theme(
-                              //   data: ThemeData(
-                              //     primaryColor: Colors.blue,
-                              //     primaryColorDark: Colors.black
-
-
-                              //   ),
+                            
 
                                 
                                  TextFormField(
-                                  style: TextStyle(color: Colors.red),
-                                  decoration: InputDecoration( fillColor: Colors.white,
+                                  style:const TextStyle(color: Colors.blue),
+                                  decoration: InputDecoration( 
+                                    fillColor: Colors.grey[400],
+                                  focusColor: Colors.blue,
                                   filled: true,
                                     border: OutlineInputBorder(
                                       
                                      borderRadius: 
                                      BorderRadius.circular(20),
-                                     borderSide: BorderSide(color: Colors.blue,width: 1.0)
+                                     borderSide:const BorderSide(color: Colors.blue,width: 2.0)
                                     ),
                                     labelText: "Email",
                                     hintText: "name@example.com",
@@ -125,25 +123,20 @@ class LoginPage extends StatelessWidget {
                               const SizedBox(
                                 height: 16,
                               ),
-                                //  Theme(
-                                // data: ThemeData(
-                                //   primaryColor: Colors.blue,
-                                //   primaryColorDark: Colors.black
+                               
 
-
-                                // ),
-
-                              TextFormField(style: TextStyle(color: Colors.red),
-                                decoration: InputDecoration( fillColor: Colors.white,
+                              TextFormField(style: const TextStyle(color: Colors.blue),
+                                decoration: InputDecoration( fillColor: Colors.grey[400],
                                 filled: true,
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20),
-                                     borderSide: BorderSide(color: Colors.blue,width: 1.0)
+                                     borderSide:const BorderSide(color: Colors.blue,width: 2.0)
 
                                   ),
                                  // fillColor: Colors.black,
                                   labelText: "Password",
                                   prefixIcon: const Icon(FontAwesomeIcons.key),
+                                  prefixIconColor: Colors.black
                                 ),
                              
                                 keyboardType: TextInputType.visiblePassword,
@@ -216,126 +209,16 @@ class LoginPage extends StatelessWidget {
                               const SizedBox(
                                 height: 100,
                               ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Divider(
-                                      color: Colors.grey[300],
-                                      height: 100,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: TextWidget('or continue with'),
-                                  ),
-                                  Expanded(
-                                      child: Divider(
-                                    color: Colors.grey[400],
-                                    height: 50,
-                                  )),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              Center(
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ElevatedButton(
-                                        onPressed: () {},
-                                        style: ButtonStyle(
-                                          shape: MaterialStateProperty.all(
-                                            RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(22),
-                                            ),
-                                          ),
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.blueAccent),
-                                          padding: MaterialStateProperty.all(
-                                            const EdgeInsets.all(14),
-                                          ),
-                                        ),
-                                        child: Wrap(
-                                          children: const [
-                                            Icon(FontAwesomeIcons.facebook),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text(
-                                              "Facebook",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  color: Colors.white),
-                                            ),
-                                          ],
-                                        )),
-                                    const SizedBox(
-                                      width: 15,
-                                    ),
-                                    ElevatedButton(
-                                        onPressed: () {},
-                                        style: ButtonStyle(
-                                          shape: MaterialStateProperty.all(
-                                            RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(22),
-                                            ),
-                                          ),
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.deepPurpleAccent),
-                                          padding: MaterialStateProperty.all(
-                                            const EdgeInsets.all(14),
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 6.0, right: 6.0),
-                                          child: Wrap(
-                                            children: const [
-                                              Icon(FontAwesomeIcons.twitter),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Text(
-                                                "Twitter",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: Colors.white),
-                                              ),
-                                            ],
-                                          ),
-                                        )),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              // Row(
-                              //   crossAxisAlignment: CrossAxisAlignment.center,
-                              //   mainAxisAlignment: MainAxisAlignment.center,
-                              //   children: [
-                              //     TextWidget("Don't have account?"),
-                              //     const SizedBox(
-                              //       width: 10,
-                              //     ),
-                              //     FlatButton(
-                              //       onPressed: () {
-                              //         Get.toNamed('SignUpPage');
-                              //       },
-                              //       child: TextWidget("Sign up"),
-                              //     ),
-                              //   ],
-                              // ),
+                            
+                                
+                               
+                                         
+                                
+                           
+                             
                             ],
                           ),
-                        ),
+                            ),
                       ),
                     ),
                   ),

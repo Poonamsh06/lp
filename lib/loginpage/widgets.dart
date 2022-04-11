@@ -11,8 +11,8 @@ class TextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(text,
         style: const TextStyle(
-          fontSize: 13,
-          color: Colors.grey,
+          fontSize: 15,
+          color: Colors.black,
         ));
   }
 }
